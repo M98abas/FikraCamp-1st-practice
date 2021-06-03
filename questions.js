@@ -217,20 +217,18 @@ console.log(missingNum([7, 2, 3, 6, 5, 9, 1, 4, 8]));
  There are no hyphens used (e.g. "thirty five" not "thirty-five").
  The word "and" is not used (e.g. "one hundred one" not "one hundred and one").
   */
- var num = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" ");
- var tens = "twenty thirty forty fifty sixty seventy eighty ninety".split(" ");
+var num = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" ");
+var tens = "twenty thirty forty fifty sixty seventy eighty ninety".split(" ");
+
+function numToEng(n){
+    if (n < 20) return num[n];
+    var digit = n%10;
+    if (n < 100) return tens[~~(n/10)-2] + (digit? " " + num[digit]: "");
+    if (n < 1000) return num[~~(n/100)] +" hundred" + (n%100 == 0? "": " " + numToEng(n%100));
+    return numToEng(~~(n/1000)) + " thousand" + (n%1000 != 0? " " + numToEng(n%1000): "");
+}
  
- function numToEng(n){
-     if (n < 20) return num[n];
-     var digit = n%10;
-     if (n < 100) return tens[~~(n/10)-2] + (digit? " " + num[digit]: "");
-     if (n < 1000) return num[~~(n/100)] +" hundred" + (n%100 == 0? "": " " + numToEng(n%100));
-     return numToEng(~~(n/1000)) + " thousand" + (n%1000 != 0? " " + numToEng(n%1000): "");
- }
- 
- console.log(
-   numToEng(90)
- ); 
+console.log(numToEng(90)); 
 
 /** Q10
   * Create a function that squares every digit of a number.
